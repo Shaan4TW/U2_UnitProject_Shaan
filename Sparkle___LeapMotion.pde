@@ -8,11 +8,13 @@ import ddf.minim.ugens.*;
 import de.voidplus.leapmotion.*;
 
 Minim minim;
+AudioPlayer song;
+AudioPlayer input;
 LeapMotion leap;
 
 PImage sparkleImg;
 Sparkle[] sparkles;
-int n = 25;
+int n = 50;
 
 ArrayList<Hand> hands;
 
@@ -21,6 +23,12 @@ void setup()
   fullScreen();
   background(255);
   minim = new Minim(this);
+  
+  song = minim.loadFile("50 Cent - In Da Club.mp3");
+  
+  song.mute();
+  song.loop();
+ 
 
   sparkleImg = loadImage("sparkle.png");
   sparkleImg.resize(n, n);
@@ -42,7 +50,7 @@ void draw()
 {
   background(255);
   hands = leap.getHands();
-
+  
   if (hands.size() == 2)
   {
     Hand h0 = hands.get(0);
@@ -57,6 +65,10 @@ void draw()
     {
       for (int i = 0; i < 50; i++)
       {
+        song.setLoopPoints(2000,16500);
+        
+        song.unmute();
+        
         sparkles[i].Draw();
         sparkles[i].Sparkling();
       }
